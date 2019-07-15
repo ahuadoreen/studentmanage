@@ -1,0 +1,8 @@
+org\demo\maven\model\Score.class
+org\demo\maven\controller\ClassController.class
+org\demo\maven\model\Teacher.class
+org\demo\maven\respository\TeacherRespository.class
+org\demo\maven\model\Classes.class
+org\demo\maven\respository\ClassRespository.class
+org\demo\maven\controller\TeacherController.class
+org\demo\maven\model\Student.class

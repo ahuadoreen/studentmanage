@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Vue 测试实例 - 菜鸟教程(runoob.com)</title>
+<link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
+<script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script src="https://cdn.staticfile.org/vue/2.4.2/vue.min.js"></script>
+<script src="https://cdn.staticfile.org/axios/0.18.0/axios.min.js"></script>
+</head>
+<body>
+<div class="container">
+<div id="form">
+ <h1>托尔兹军官学院管理系统-添加教师</h1>
+    <hr/>
+  <div class="form-group">
+            <label for="firstName">姓名:</label>
+            <input type="text" class="form-control" id="name" v-model.trim="name" placeholder="输入姓名:"/>
+        </div>
+  <br>
+  <div class="form-group">
+            <label for="gender">性别:</label>
+            <select class="form-control" id="gender" v-model="gender">
+            <option value="0">男</option>
+            <option value="1">女</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="age">年龄:</label>
+            <input type="text" class="form-control" id="age" name="age" v-model.number="age" placeholder="输入年龄:"/>
+        </div>
+  <br>
+  <div class="form-group">
+            <label for="password">科目:</label>
+            <input type="text" class="form-control" id="subject" name="subject" v-model.trim="subject" placeholder="输入所教科目:"/>
+        </div>
+  <br>
+<div class="form-group">
+            <input type="button" value="提交" v-on:click="submit">
+        </div>
+  <br/>
+  <br/>  
+</div>
+</div>
+<script>
+var url = "http://localhost:8080/studentmanage/teacher/";
+new Vue({
+	  el: '#form',
+	  data: {
+		  //初始值
+		  name:'李老师',
+		  gender:0,
+		  age:30,
+		  subject: '数学'
+	  },
+		methods:{
+			//提交表单
+			submit:function(){
+				var params = new URLSearchParams();
+		        params.append('name', this.name);
+		        params.append('gender', this.gender);
+		        params.append('age', this.age);
+		        params.append('subject', this.subject);
+				axios({
+					  method:'post',
+					  url:url + "addTeacher",					  
+					  data: params
+					})
+					  .then(function(response) {
+						  console.log(response);
+						    window.history.back();
+					})
+					.catch(function (error) {
+					    console.log(error);
+					  });
+			}
+		}
+	});
+		
+</script>
+</body>
+</html>
