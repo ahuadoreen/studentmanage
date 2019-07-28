@@ -7,8 +7,8 @@ import java.util.Set;
 import org.demo.maven.model.ResponseData;
 import org.demo.maven.model.Subject;
 import org.demo.maven.model.Teacher;
-import org.demo.maven.respository.SubjectRespository;
-import org.demo.maven.respository.TeacherRespository;
+import org.demo.maven.respository.SubjectRepository;
+import org.demo.maven.respository.TeacherRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Controller;
@@ -17,9 +17,9 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 public class TeacherController {
 	@Autowired
-	TeacherRespository teacherRespository;
+    TeacherRepository teacherRepository;
     @Autowired
-    private SubjectRespository subjectRespository;
+    private SubjectRepository subjectRepository;
 	
 	@RequestMapping(value = "/teacher/addTeacher", method = RequestMethod.POST)
 	@ResponseBody
@@ -27,7 +27,7 @@ public class TeacherController {
     {
         Set<Subject> subjects = new HashSet<>();
         for(int i=0;i<subjectIds.length;i++){
-            Subject subject = subjectRespository.findOne(Long.valueOf(subjectIds[i]));
+            Subject subject = subjectRepository.findOne(Long.valueOf(subjectIds[i]));
             subjects.add(subject);
         }
         // 数据库中添加一个用户，该步暂时不会刷新缓存,save()方法处理完毕后，数据依然在缓冲区未写入数据库
@@ -37,7 +37,7 @@ public class TeacherController {
 		teacher.setAge(Integer.valueOf(age));
 		teacher.setGender(gender);
         // 数据库中添加一个用户，并立即刷新缓存并写入数据库
-    	teacherRespository.saveAndFlush(teacher);
+    	teacherRepository.saveAndFlush(teacher);
         ResponseData responseData = ResponseData.ok();
         return responseData;
     }
@@ -59,7 +59,7 @@ public class TeacherController {
 ///定义匹配规则 匹配"name"这个属性 exact 精准匹配
         ExampleMatcher exampleMatcher = ExampleMatcher.matching().withMatcher("name",ExampleMatcher.GenericPropertyMatchers.contains());
         Example<Teacher> example = Example.of(teacher,exampleMatcher);
-        Page<Teacher> page = teacherRespository.findAll(example, pageable);
+        Page<Teacher> page = teacherRepository.findAll(example, pageable);
 ///获取总页数
         int pageCount = page.getTotalPages();
 ///获取总元素个数
@@ -79,15 +79,15 @@ public class TeacherController {
     {
         Set<Subject> subjects = new HashSet<>();
         for(int i=0;i<subjectIds.length;i++){
-            Subject subject = subjectRespository.findOne(Long.valueOf(subjectIds[i]));
+            Subject subject = subjectRepository.findOne(Long.valueOf(subjectIds[i]));
             subjects.add(subject);
         }
-        Teacher teacher = teacherRespository.findOne(id);
+        Teacher teacher = teacherRepository.findOne(id);
         teacher.setName(name);
         teacher.setSubject(subjects);
         teacher.setAge(Integer.valueOf(age));
         teacher.setGender(gender);
-        teacherRespository.saveAndFlush(teacher);
+        teacherRepository.saveAndFlush(teacher);
         ResponseData responseData = ResponseData.ok();
         return responseData;
     }
@@ -96,7 +96,7 @@ public class TeacherController {
     @ResponseBody
     public ResponseData deleteTeacher(Long id)
     {
-        teacherRespository.delete(id);
+        teacherRepository.delete(id);
         ResponseData responseData = ResponseData.ok();
         return responseData;
     }

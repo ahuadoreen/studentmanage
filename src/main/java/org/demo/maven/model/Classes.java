@@ -1,6 +1,7 @@
 package org.demo.maven.model;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.*;
@@ -17,7 +18,7 @@ public class Classes implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
-	private Long classId;
+	private Long id;
 	
 	@Basic
 	@Column(name = "class_name")
@@ -25,30 +26,18 @@ public class Classes implements Serializable {
 	
 	@Basic
 	@Column(name = "grade")
-	private String grade;
+	private Integer grade;
 	
 	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="main_teacher")
 	private Teacher mainTeacher;
 
-	@ManyToMany(fetch=FetchType.EAGER)
-	@JoinTable(name = "class_subject", joinColumns = {
-			@JoinColumn(name = "class_id", referencedColumnName = "id")}, inverseJoinColumns = {
-			@JoinColumn(name = "subject_id", referencedColumnName = "id")})
-	private Set<Subject> subjects;
-
-	@ManyToMany(fetch=FetchType.EAGER)
-	@JoinTable(name = "class_teacher", joinColumns = {
-			@JoinColumn(name = "class_id", referencedColumnName = "id")}, inverseJoinColumns = {
-			@JoinColumn(name = "teacher_id", referencedColumnName = "id")})
-	private Set<Teacher> teachers;
-
-	public Long getClassId() {
-		return classId;
+	public Long getId() {
+		return id;
 	}
 
-	public void setClassId(Long classId) {
-		this.classId = classId;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public String getClassName() {
@@ -59,11 +48,11 @@ public class Classes implements Serializable {
 		this.className = className;
 	}
 
-	public String getGrade() {
+	public Integer getGrade() {
 		return grade;
 	}
 
-	public void setGrade(String grade) {
+	public void setGrade(Integer grade) {
 		this.grade = grade;
 	}
 
@@ -75,19 +64,4 @@ public class Classes implements Serializable {
 		this.mainTeacher = mainTeacher;
 	}
 
-	public Set<Subject> getSubjects() {
-		return subjects;
-	}
-
-	public void setSubjects(Set<Subject> subjects) {
-		this.subjects = subjects;
-	}
-
-	public Set<Teacher> getTeachers() {
-		return teachers;
-	}
-
-	public void setTeachers(Set<Teacher> teachers) {
-		this.teachers = teachers;
-	}
 }

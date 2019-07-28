@@ -2,8 +2,7 @@ package org.demo.maven.controller;
 
 import org.demo.maven.model.ResponseData;
 import org.demo.maven.model.Subject;
-import org.demo.maven.model.Teacher;
-import org.demo.maven.respository.SubjectRespository;
+import org.demo.maven.respository.SubjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Controller;
@@ -16,7 +15,7 @@ import java.util.List;
 @Controller
 public class SubjectController {
     @Autowired
-    private SubjectRespository subjectRespository;
+    private SubjectRepository subjectRespository;
 
     @RequestMapping(value = "/subject/addSubject", method = RequestMethod.POST)
     @ResponseBody
@@ -51,7 +50,7 @@ public class SubjectController {
 
     @RequestMapping(value = "/subject/editSubject", method = RequestMethod.POST)
     @ResponseBody
-    public ResponseData editTeacher(Long id, final String name)
+    public ResponseData editSubject(Long id, final String name)
     {
         Subject subject = subjectRespository.findOne(id);
         subject.setName(name);
