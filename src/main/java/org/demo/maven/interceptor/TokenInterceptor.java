@@ -20,8 +20,8 @@ public class TokenInterceptor implements HandlerInterceptor {
         response.setCharacterEncoding("utf-8");
         String token = request.getHeader("token");
         JSONObject json = new JSONObject();
-        json.put("code", 403);
-        json.put("message", "Forbidden");
+        json.put("code", 401);
+        json.put("message", "Unauthorized");
         String responseData = json.toString();
         //token不存在
         if(null != token) {

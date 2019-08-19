@@ -52,7 +52,7 @@ public class Teacher implements Serializable {
 		this.name = name;
 	}
 
-	public Set<Subject> getSubject() {
+	public Set<Subject> getSubjects() {
 		return subjects;
 	}
 
